@@ -1,0 +1,1117 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Planilha de Controle Financeiro Empresarial</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --navy: #1a3466;
+    --navy-dark: #152a52;
+    --green: #7fc83a;
+    --green-dark: #6ab52e;
+    --coral: #e85a4f;
+    --coral-dark: #d44f45;
+    --white: #ffffff;
+    --off-white: #f7f8f4;
+    --dark: #1a3a2a;
+    --black: #111111;
+    --text-muted: #6b7280;
+  }
+
+  body {
+    font-family: 'Inter', system-ui, sans-serif;
+    color: var(--dark);
+    background: var(--white);
+    line-height: 1.6;
+  }
+
+  .urgency-bar {
+    background: var(--coral);
+    padding: 10px 16px;
+    text-align: center;
+    color: var(--white);
+    font-weight: 700;
+    font-size: 14px;
+    letter-spacing: 0.5px;
+    text-transform: uppercase;
+  }
+  .urgency-bar span { margin-right: 6px; }
+
+  .hero {
+    background: var(--navy);
+    padding: 56px 20px 64px;
+    text-align: center;
+  }
+  .hero h1 {
+    color: var(--white);
+    font-size: clamp(28px, 5vw, 46px);
+    font-weight: 900;
+    text-transform: uppercase;
+    line-height: 1.15;
+    max-width: 820px;
+    margin: 0 auto 16px;
+    letter-spacing: -0.5px;
+  }
+  .hero h2 {
+    color: var(--green);
+    font-size: clamp(16px, 2.5vw, 22px);
+    font-weight: 800;
+    text-transform: uppercase;
+    max-width: 700px;
+    margin: 0 auto 36px;
+    line-height: 1.4;
+  }
+  .mockup-placeholder {
+    width: 100%;
+    max-width: 540px;
+    min-height: 320px;
+    border: 2px dashed rgba(255,255,255,0.3);
+    border-radius: 16px;
+    margin: 0 auto 32px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: rgba(255,255,255,0.4);
+    font-size: 14px;
+    font-weight: 500;
+  }
+  .badge-row {
+    display: flex;
+    gap: 12px;
+    justify-content: center;
+    flex-wrap: wrap;
+    margin-bottom: 20px;
+  }
+  .badge {
+    border: 2px solid rgba(255,255,255,0.6);
+    border-radius: 999px;
+    padding: 7px 18px;
+    color: var(--white);
+    font-size: 13px;
+    font-weight: 600;
+  }
+  .delivery-text {
+    color: rgba(255,255,255,0.8);
+    font-size: 14px;
+    margin-bottom: 32px;
+  }
+  .delivery-text strong { color: var(--white); }
+  .btn-green {
+    display: inline-block;
+    background: var(--green);
+    color: var(--black);
+    font-weight: 800;
+    font-size: clamp(14px, 2vw, 17px);
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    padding: 18px 36px;
+    border-radius: 999px;
+    text-decoration: none;
+    width: 100%;
+    max-width: 540px;
+    transition: background 0.2s;
+    cursor: pointer;
+    border: none;
+  }
+  .btn-green:hover { background: var(--green-dark); }
+  .social-proof {
+    margin-top: 28px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    color: var(--white);
+  }
+  .avatar-cluster { display: flex; }
+  .avatar {
+    width: 36px;
+    height: 36px;
+    border-radius: 50%;
+    background: rgba(255,255,255,0.25);
+    border: 2px solid var(--white);
+    margin-left: -10px;
+  }
+  .avatar:first-child { margin-left: 0; }
+  .social-text { font-size: 13px; font-weight: 600; }
+  .social-text span { color: var(--green); }
+
+  /* CAROUSEL */
+  .carousel-section {
+    background: var(--off-white);
+    padding: 56px 20px;
+    text-align: center;
+  }
+  .carousel-section h3 {
+    font-size: clamp(18px, 3vw, 26px);
+    font-weight: 800;
+    color: var(--dark);
+    margin-bottom: 10px;
+  }
+  .carousel-subtitle {
+    color: var(--text-muted);
+    font-size: 15px;
+    margin-bottom: 36px;
+    max-width: 540px;
+    margin-left: auto;
+    margin-right: auto;
+  }
+  .carousel-wrapper { overflow: hidden; max-width: 900px; margin: 0 auto; }
+  .carousel-track {
+    display: flex;
+    gap: 16px;
+    transition: transform 0.5s ease;
+    will-change: transform;
+  }
+  .carousel-card {
+    flex: 0 0 calc((100% - 32px) / 3);
+    border: 2px dashed #ccc;
+    border-radius: 12px;
+    min-height: 200px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #aaa;
+    font-size: 13px;
+    font-weight: 500;
+    background: var(--white);
+    padding: 24px 16px;
+    overflow: hidden;
+  }
+  .carousel-dots { display: flex; justify-content: center; gap: 8px; margin-top: 20px; }
+  .carousel-dot {
+    width: 9px; height: 9px;
+    border-radius: 50%;
+    background: #ccc;
+    border: none;
+    cursor: pointer;
+    transition: background 0.3s;
+    padding: 0;
+  }
+  .carousel-dot.active { background: var(--navy); }
+  @media (max-width: 600px) {
+    .carousel-card { flex: 0 0 100%; min-height: 160px; }
+  }
+
+  /* FEATURES */
+  .features-section { background: var(--navy); padding: 64px 20px; }
+  .container { max-width: 1000px; margin: 0 auto; }
+  .features-section h2 {
+    color: var(--white);
+    font-size: clamp(22px, 4vw, 36px);
+    font-weight: 900;
+    text-transform: uppercase;
+    text-align: center;
+    margin-bottom: 48px;
+    line-height: 1.2;
+  }
+  .features-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 32px;
+    align-items: start;
+  }
+  @media (max-width: 700px) { .features-grid { grid-template-columns: 1fr; } }
+  .features-mockup {
+    border: 2px dashed rgba(255,255,255,0.3);
+    border-radius: 16px;
+    min-height: 340px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: rgba(255,255,255,0.3);
+    font-size: 14px;
+    background: rgba(255,255,255,0.05);
+    overflow: hidden;
+  }
+  .feature-cards { display: flex; flex-direction: column; gap: 16px; }
+  .feature-card {
+    background: var(--white);
+    border-radius: 16px;
+    padding: 20px;
+    display: flex;
+    gap: 14px;
+    align-items: flex-start;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.08);
+  }
+  .check-circle {
+    width: 28px; height: 28px;
+    border-radius: 50%;
+    background: var(--green);
+    display: flex; align-items: center; justify-content: center;
+    flex-shrink: 0; margin-top: 2px;
+  }
+  .check-circle svg { width: 16px; height: 16px; fill: var(--white); }
+  .feature-card h4 { font-size: 15px; font-weight: 700; color: var(--dark); margin-bottom: 4px; }
+  .feature-card p { font-size: 13px; color: #4a5568; line-height: 1.5; }
+
+  /* PROMO */
+  .promo-section { background: var(--coral); padding: 56px 20px; text-align: center; }
+  .promo-section h2 {
+    color: var(--white);
+    font-size: clamp(22px, 4vw, 34px);
+    font-weight: 900;
+    text-transform: uppercase;
+    max-width: 700px;
+    margin: 0 auto 20px;
+    line-height: 1.2;
+  }
+  .promo-section p {
+    color: rgba(255,255,255,0.9);
+    font-size: 15px;
+    max-width: 620px;
+    margin: 0 auto 12px;
+    line-height: 1.6;
+  }
+  .promo-section .btn-green { margin-top: 28px; }
+
+  /* PARA QUEM */
+  .paraquem-section { background: var(--navy); padding: 64px 20px; }
+  .paraquem-inner {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 40px;
+    align-items: start;
+    max-width: 1000px;
+    margin: 0 auto;
+  }
+  @media (max-width: 700px) { .paraquem-inner { grid-template-columns: 1fr; } }
+  .paraquem-title {
+    color: var(--white);
+    font-size: clamp(24px, 4vw, 38px);
+    font-weight: 900;
+    text-transform: uppercase;
+    line-height: 1.15;
+  }
+  .paraquem-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+  .paraquem-card {
+    background: var(--white);
+    border-radius: 14px;
+    padding: 20px 16px;
+    display: flex;
+    gap: 10px;
+    align-items: flex-start;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+  }
+  .paraquem-card p { font-size: 13px; color: var(--dark); line-height: 1.5; font-weight: 500; }
+  @media (max-width: 480px) { .paraquem-grid { grid-template-columns: 1fr; } }
+
+  /* TUDO QUE VAI RECEBER */
+  .receive-section { background: var(--white); padding: 64px 20px; text-align: center; }
+  .receive-section h2 {
+    font-size: clamp(22px, 4vw, 34px);
+    font-weight: 900;
+    text-transform: uppercase;
+    color: var(--dark);
+    margin-bottom: 12px;
+  }
+  .pill-badge {
+    display: inline-block;
+    background: var(--green);
+    color: var(--black);
+    font-size: 12px;
+    font-weight: 700;
+    text-transform: uppercase;
+    padding: 6px 16px;
+    border-radius: 999px;
+    margin-bottom: 32px;
+    letter-spacing: 0.5px;
+  }
+  .receive-card {
+    background: var(--navy);
+    border-radius: 20px;
+    max-width: 580px;
+    margin: 0 auto;
+    padding: 36px 32px 40px;
+    text-align: left;
+  }
+  .receive-card h3 {
+    color: var(--white);
+    font-size: 20px;
+    font-weight: 800;
+    text-align: center;
+    margin-bottom: 8px;
+  }
+  .receive-mockup {
+    border: 2px dashed rgba(255,255,255,0.3);
+    border-radius: 12px;
+    min-height: 180px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: rgba(255,255,255,0.3);
+    font-size: 13px;
+    margin-bottom: 24px;
+    overflow: hidden;
+  }
+  .bullet-list { list-style: none; }
+  .bullet-list li {
+    display: flex;
+    gap: 10px;
+    align-items: flex-start;
+    color: var(--white);
+    font-size: 14px;
+    line-height: 1.5;
+    padding: 5px 0;
+    border-bottom: 1px solid rgba(255,255,255,0.08);
+  }
+  .bullet-list li:last-child { border-bottom: none; }
+  .bullet-list li::before {
+    content: "✓";
+    color: var(--green);
+    font-weight: 700;
+    flex-shrink: 0;
+    font-size: 14px;
+    margin-top: 1px;
+  }
+  .etc-text {
+    color: var(--green);
+    font-weight: 800;
+    font-size: 15px;
+    text-align: center;
+    margin: 16px 0 24px;
+  }
+  .receive-cta { text-align: center; margin-top: 32px; }
+  .receive-delivery {
+    color: rgba(255,255,255,0.65);
+    font-size: 12px;
+    text-align: center;
+    margin-top: 12px;
+  }
+
+  /* BONUS */
+  .bonus-section { background: var(--navy); padding: 64px 20px; }
+  .bonus-intro { text-align: center; color: rgba(255,255,255,0.8); font-size: 16px; margin-bottom: 8px; }
+  .bonus-warning { text-align: center; color: #ff9f7f; font-size: 14px; font-weight: 600; margin-bottom: 8px; }
+  .bonus-title {
+    text-align: center;
+    color: var(--white);
+    font-size: clamp(20px, 3.5vw, 30px);
+    font-weight: 900;
+    text-transform: uppercase;
+    margin-bottom: 4px;
+  }
+  .bonus-title span { color: var(--green); }
+  .bonus-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 20px;
+    max-width: 1000px;
+    margin: 36px auto 0;
+  }
+  @media (max-width: 600px) { .bonus-grid { grid-template-columns: 1fr; } }
+  .bonus-card {
+    background: var(--white);
+    border-radius: 20px;
+    padding: 28px 24px;
+    box-shadow: 0 4px 16px rgba(0,0,0,0.12);
+  }
+  .bonus-pill {
+    display: inline-block;
+    background: var(--green);
+    color: var(--black);
+    font-size: 11px;
+    font-weight: 700;
+    text-transform: uppercase;
+    padding: 5px 14px;
+    border-radius: 999px;
+    margin-bottom: 12px;
+  }
+  .bonus-card-mockup {
+    border: 2px dashed #ddd;
+    border-radius: 10px;
+    min-height: 120px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #bbb;
+    font-size: 13px;
+    margin-bottom: 16px;
+    overflow: hidden;
+  }
+  .bonus-card h4 { font-size: 16px; font-weight: 800; color: var(--dark); margin-bottom: 10px; }
+  .bonus-card ul { list-style: none; }
+  .bonus-card ul li {
+    font-size: 13px;
+    color: #4a5568;
+    padding: 4px 0;
+    display: flex;
+    gap: 8px;
+    align-items: flex-start;
+  }
+  .bonus-card ul li::before { content: "✓"; color: var(--green); font-weight: 700; flex-shrink: 0; }
+  .bonus-value { margin-top: 14px; font-size: 13px; font-weight: 700; color: var(--text-muted); }
+  .bonus-value span { color: var(--green); font-size: 12px; }
+
+  /* PRICING */
+  .pricing-section { background: var(--off-white); padding: 64px 20px; text-align: center; }
+  .pricing-section h2 {
+    font-size: clamp(20px, 3.5vw, 32px);
+    font-weight: 900;
+    text-transform: uppercase;
+    color: var(--dark);
+    margin-bottom: 8px;
+  }
+  .pricing-sub { font-size: 15px; color: var(--text-muted); margin-bottom: 40px; }
+  .pricing-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 24px;
+    max-width: 760px;
+    margin: 0 auto;
+    align-items: start;
+  }
+  @media (max-width: 600px) { .pricing-grid { grid-template-columns: 1fr; } }
+  .pricing-card {
+    background: var(--white);
+    border-radius: 20px;
+    padding: 32px 24px 28px;
+    box-shadow: 0 4px 20px rgba(0,0,0,0.08);
+    text-align: left;
+    position: relative;
+  }
+  .pricing-card.featured { border: 2px solid var(--green); }
+  .most-sold-badge {
+    position: absolute;
+    top: -14px;
+    left: 50%;
+    transform: translateX(-50%);
+    background: var(--green);
+    color: var(--black);
+    font-size: 11px;
+    font-weight: 800;
+    text-transform: uppercase;
+    padding: 5px 16px;
+    border-radius: 999px;
+    white-space: nowrap;
+  }
+  .pricing-card h3 { font-size: 20px; font-weight: 800; color: var(--dark); margin-bottom: 4px; }
+  .plan-desc { font-size: 13px; color: var(--text-muted); margin-bottom: 16px; }
+  .pricing-divider { border: none; border-top: 1px solid #eee; margin: 16px 0; }
+  .pricing-items { list-style: none; margin-bottom: 20px; }
+  .pricing-items li {
+    font-size: 13px;
+    color: #4a5568;
+    padding: 5px 0;
+    display: flex;
+    gap: 8px;
+    align-items: flex-start;
+  }
+  .pricing-items li::before { content: "✓"; color: var(--green); font-weight: 700; flex-shrink: 0; margin-top: 1px; }
+  .price-block { margin-bottom: 20px; }
+  .price-from { font-size: 13px; color: var(--text-muted); text-decoration: line-through; }
+  .price-main { font-size: 36px; font-weight: 900; color: var(--dark); line-height: 1; }
+  .price-installment { font-size: 12px; color: var(--text-muted); margin-top: 4px; }
+  .pricing-card .btn-green { width: 100%; text-align: center; font-size: 14px; padding: 15px 24px; }
+  .pricing-warning { font-size: 11px; color: var(--text-muted); text-align: center; margin-top: 12px; line-height: 1.4; }
+  .pricing-guarantee {
+    text-align: center;
+    margin-top: 32px;
+    font-size: 13px;
+    color: var(--text-muted);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    font-weight: 600;
+  }
+  .pricing-guarantee .shield { font-size: 20px; }
+
+  /* GUARANTEE */
+  .guarantee-section { background: var(--white); padding: 64px 20px; text-align: center; }
+  .guarantee-box {
+    max-width: 620px;
+    margin: 0 auto;
+    border: 2px solid var(--green);
+    border-radius: 20px;
+    padding: 40px 32px;
+  }
+  .guarantee-icon { font-size: 48px; margin-bottom: 16px; }
+  .guarantee-box h2 {
+    font-size: clamp(20px, 3vw, 28px);
+    font-weight: 900;
+    text-transform: uppercase;
+    color: var(--dark);
+    margin-bottom: 16px;
+  }
+  .guarantee-box p { font-size: 15px; color: #4a5568; line-height: 1.7; }
+
+  /* HOW IT WORKS */
+  .howto-section { background: var(--off-white); padding: 64px 20px; text-align: center; }
+  .howto-section h2 {
+    font-size: clamp(20px, 3.5vw, 30px);
+    font-weight: 900;
+    text-transform: uppercase;
+    color: var(--dark);
+    margin-bottom: 8px;
+  }
+  .howto-sub { font-size: 14px; color: var(--text-muted); margin-bottom: 40px; }
+  .steps-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 24px;
+    max-width: 780px;
+    margin: 0 auto 36px;
+  }
+  @media (max-width: 600px) { .steps-grid { grid-template-columns: 1fr; } }
+  .step-card {
+    background: var(--white);
+    border-radius: 16px;
+    padding: 24px 18px;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.06);
+    text-align: center;
+  }
+  .step-num {
+    width: 44px; height: 44px;
+    border-radius: 50%;
+    background: var(--navy);
+    color: var(--white);
+    font-size: 18px;
+    font-weight: 900;
+    display: flex; align-items: center; justify-content: center;
+    margin: 0 auto 12px;
+  }
+  .step-card h4 { font-size: 14px; font-weight: 700; color: var(--dark); margin-bottom: 6px; }
+  .step-card p { font-size: 12px; color: #6b7280; line-height: 1.5; }
+  .step-bullets { list-style: none; text-align: left; margin-top: 10px; }
+  .step-bullets li { font-size: 12px; color: #6b7280; padding: 3px 0; display: flex; gap: 6px; align-items: flex-start; }
+  .step-bullets li::before { content: "✓"; color: var(--green); font-weight: 700; flex-shrink: 0; }
+
+  /* FAQ */
+  .faq-section { background: var(--white); padding: 64px 20px; }
+  .faq-section h2 {
+    font-size: clamp(20px, 3.5vw, 30px);
+    font-weight: 900;
+    text-transform: uppercase;
+    color: var(--dark);
+    text-align: center;
+    margin-bottom: 8px;
+  }
+  .faq-sub { text-align: center; font-size: 14px; color: var(--text-muted); margin-bottom: 36px; }
+  .faq-list { max-width: 700px; margin: 0 auto; display: flex; flex-direction: column; gap: 12px; }
+  .faq-item {
+    background: var(--white);
+    border-radius: 14px;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.07);
+    overflow: hidden;
+  }
+  .faq-question {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 18px 20px;
+    cursor: pointer;
+    gap: 12px;
+    user-select: none;
+  }
+  .faq-question span {
+    font-size: 15px;
+    font-weight: 600;
+    color: var(--dark);
+    flex: 1;
+    line-height: 1.4;
+  }
+  .faq-toggle {
+    width: 30px; height: 30px;
+    border-radius: 50%;
+    background: #fce4e4;
+    display: flex; align-items: center; justify-content: center;
+    flex-shrink: 0;
+    font-size: 18px;
+    color: var(--coral);
+    font-weight: 700;
+    transition: transform 0.25s;
+  }
+  .faq-item.open .faq-toggle { transform: rotate(45deg); }
+  .faq-answer {
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height 0.3s ease, padding 0.2s;
+    font-size: 14px;
+    color: #4a5568;
+    line-height: 1.65;
+  }
+  .faq-item.open .faq-answer { max-height: 400px; padding: 0 20px 18px; }
+
+  /* FINAL CTA */
+  .final-cta { background: var(--white); padding: 56px 20px; text-align: center; }
+  .final-cta .btn-green { max-width: 600px; font-size: 16px; }
+
+  /* FOOTER */
+  footer {
+    background: var(--black);
+    padding: 40px 20px;
+    text-align: center;
+    color: rgba(255,255,255,0.5);
+    font-size: 12px;
+    line-height: 1.8;
+  }
+  footer p { max-width: 800px; margin: 0 auto 10px; }
+  footer .copyright { color: rgba(255,255,255,0.7); font-weight: 600; margin-bottom: 16px; font-size: 13px; }
+</style>
+</head>
+<body>
+
+<!-- URGENCY BAR -->
+<div class="urgency-bar">
+  <span>⚡</span> OFERTA DISPONÍVEL SOMENTE HOJE
+</div>
+
+<!-- HERO -->
+<section class="hero">
+  <h1>PLANILHA DE CONTROLE FINANCEIRO EMPRESARIAL</h1>
+  <h2>DESCUBRA PARA ONDE VAI O DINHEIRO DA SUA EMPRESA EM APENAS 30 MINUTOS</h2>
+
+  <div class="mockup-placeholder">[ Mockup do produto ]</div>
+
+  <p style="color:rgba(255,255,255,0.85);font-size:15px;max-width:580px;margin:0 auto 28px;line-height:1.6;">
+    Você vende, recebe pagamentos e trabalha todos os dias, mas chega ao final do mês sem saber por que o dinheiro não sobra? Com uma planilha financeira pronta, você registra suas entradas, custos e despesas e deixa que ela faça as contas automaticamente — sem precisar entender de contabilidade, criar fórmulas ou montar controles do zero.
+  </p>
+
+  <div class="badge-row">
+    <span class="badge">⚡ Acesso imediato</span>
+    <span class="badge">📱 100% digital</span>
+  </div>
+
+  <p class="delivery-text">
+    Você recebe seu material após a confirmação do pagamento, pelo <strong>canal de entrega informado na compra</strong>
+  </p>
+
+  <a href="#pricing" class="btn-green">QUERO ORGANIZAR MINHAS FINANÇAS AGORA →</a>
+
+  <div class="social-proof">
+    <div class="avatar-cluster">
+      <div class="avatar"></div>
+      <div class="avatar"></div>
+      <div class="avatar"></div>
+      <div class="avatar"></div>
+    </div>
+    <p class="social-text">Feito para <span>pequenos empresários</span> que precisam enxergar para onde vai o dinheiro.</p>
+  </div>
+</section>
+
+<!-- CAROUSEL -->
+<section class="carousel-section">
+  <h3>DONOS DE PEQUENOS NEGÓCIOS, EMPREENDEDORES E PRESTADORES DE SERVIÇOS</h3>
+  <p class="carousel-subtitle">QUE PRECISAM CONTROLAR O DINHEIRO DA EMPRESA E DESCOBRIR QUANTO REALMENTE SOBRA<br><br>Essa planilha ajuda você a visualizar suas entradas, identificar os principais gastos e entender o que está acontecendo com o dinheiro do seu negócio.</p>
+  <div class="carousel-wrapper">
+    <div class="carousel-track" id="carouselTrack">
+      <div class="carousel-card">[ Imagem do carrossel 1 ]</div>
+      <div class="carousel-card">[ Imagem do carrossel 2 ]</div>
+      <div class="carousel-card">[ Imagem do carrossel 3 ]</div>
+      <div class="carousel-card">[ Imagem do carrossel 4 ]</div>
+      <div class="carousel-card">[ Imagem do carrossel 5 ]</div>
+      <div class="carousel-card">[ Imagem do carrossel 6 ]</div>
+    </div>
+  </div>
+  <div class="carousel-dots" id="carouselDots"></div>
+</section>
+
+<!-- FEATURES -->
+<section class="features-section">
+  <div class="container">
+    <h2>O que você encontra na Planilha de Controle Financeiro Empresarial</h2>
+    <div class="features-grid">
+      <div class="features-mockup">[ Imagem do produto ]</div>
+      <div class="feature-cards">
+        <div class="feature-card">
+          <div class="check-circle"><svg viewBox="0 0 20 20"><path d="M16.7 5.3a1 1 0 00-1.4 0L8 12.6 4.7 9.3a1 1 0 00-1.4 1.4l4 4a1 1 0 001.4 0l8-8a1 1 0 000-1.4z"/></svg></div>
+          <div>
+            <h4>Entradas e saídas organizadas em um só lugar</h4>
+            <p>Registre o dinheiro que entra e sai da empresa e pare de depender da memória, de anotações espalhadas ou de contas feitas de cabeça.</p>
+          </div>
+        </div>
+        <div class="feature-card">
+          <div class="check-circle"><svg viewBox="0 0 20 20"><path d="M16.7 5.3a1 1 0 00-1.4 0L8 12.6 4.7 9.3a1 1 0 00-1.4 1.4l4 4a1 1 0 001.4 0l8-8a1 1 0 000-1.4z"/></svg></div>
+          <div>
+            <h4>Identificação dos gastos que consomem seu dinheiro</h4>
+            <p>Visualize seus custos e despesas para identificar onde o dinheiro está sendo utilizado e quais gastos merecem mais atenção.</p>
+          </div>
+        </div>
+        <div class="feature-card">
+          <div class="check-circle"><svg viewBox="0 0 20 20"><path d="M16.7 5.3a1 1 0 00-1.4 0L8 12.6 4.7 9.3a1 1 0 00-1.4 1.4l4 4a1 1 0 001.4 0l8-8a1 1 0 000-1.4z"/></svg></div>
+          <div>
+            <h4>Cálculos automáticos sem fórmulas complicadas</h4>
+            <p>Preencha os campos com suas informações financeiras e deixe a planilha realizar os cálculos. Sem montar controles do zero.</p>
+          </div>
+        </div>
+        <div class="feature-card">
+          <div class="check-circle"><svg viewBox="0 0 20 20"><path d="M16.7 5.3a1 1 0 00-1.4 0L8 12.6 4.7 9.3a1 1 0 00-1.4 1.4l4 4a1 1 0 001.4 0l8-8a1 1 0 000-1.4z"/></svg></div>
+          <div>
+            <h4>Clareza sobre quanto realmente sobrou</h4>
+            <p>Depois de registrar entradas, custos e despesas, visualize o resultado do período e entenda por que vender todo dia não significa ter dinheiro sobrando.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- PROMO MID -->
+<section class="promo-section">
+  <h2>OFERTA PROMOCIONAL POR TEMPO LIMITADO</h2>
+  <p>Tenha em uma única planilha o controle das entradas, custos e despesas da sua empresa. Pare de chegar ao final do mês sem saber quanto recebeu, onde gastou e por que o caixa está sempre apertado.</p>
+  <p>Com a planilha pronta, você lança suas movimentações, acompanha os resultados e descobre para onde seu dinheiro está indo. Em vez de tomar decisões no achismo, comece a enxergar os números do seu negócio com clareza.</p>
+  <a href="#pricing" class="btn-green">QUERO GARANTIR MEU ACESSO →</a>
+</section>
+
+<!-- PARA QUEM -->
+<section class="paraquem-section">
+  <div class="paraquem-inner">
+    <div>
+      <p class="paraquem-title">ESTE MATERIAL FOI DESENVOLVIDO PARA QUEM DESEJA</p>
+    </div>
+    <div class="paraquem-grid">
+      <div class="paraquem-card">
+        <span style="font-size:20px;flex-shrink:0;">💰</span>
+        <p><strong>Descobrir para onde vai o dinheiro da empresa</strong>, sem precisar montar planilhas ou controles do zero.</p>
+      </div>
+      <div class="paraquem-card">
+        <span style="font-size:20px;flex-shrink:0;">🔍</span>
+        <p><strong>Identificar os principais gastos do negócio</strong> e entender quais despesas estão consumindo o caixa.</p>
+      </div>
+      <div class="paraquem-card">
+        <span style="font-size:20px;flex-shrink:0;">📊</span>
+        <p><strong>Visualizar quanto entrou, quanto saiu e quanto sobrou</strong>, sem cálculos manuais ou contabilidade.</p>
+      </div>
+      <div class="paraquem-card">
+        <span style="font-size:20px;flex-shrink:0;">🎯</span>
+        <p><strong>Ter mais clareza para tomar decisões financeiras</strong>, deixando de administrar apenas pela sensação.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- TUDO QUE VAI RECEBER -->
+<section class="receive-section">
+  <h2>TUDO O QUE VOCÊ VAI RECEBER</h2>
+  <span class="pill-badge">ACESSO DIGITAL ⚡</span>
+
+  <div class="receive-card">
+    <h3>Acesso à planilha financeira pronta para preenchimento.</h3>
+    <div class="receive-mockup">[ Mockup do produto ]</div>
+    <h3 style="margin-bottom:16px;">Planilha de Controle Financeiro Empresarial</h3>
+    <ul class="bullet-list">
+      <li>Planilha de controle financeiro pronta para usar</li>
+      <li>Campos organizados para preenchimento</li>
+      <li>Registro de entradas de dinheiro</li>
+      <li>Registro de custos da empresa</li>
+      <li>Registro de despesas do negócio</li>
+      <li>Organização das movimentações financeiras</li>
+      <li>Cálculos financeiros automáticos</li>
+      <li>Visualização do total de entradas</li>
+      <li>Visualização do total de saídas</li>
+      <li>Identificação dos gastos registrados</li>
+      <li>Acompanhamento dos custos e despesas</li>
+      <li>Visualização do resultado financeiro do período</li>
+      <li>Clareza sobre quanto dinheiro sobrou</li>
+      <li>Informações organizadas em um só lugar</li>
+      <li>Acompanhamento financeiro sem fórmulas complicadas</li>
+      <li>Controle sem precisar criar planilhas do zero</li>
+      <li>Primeira análise em aproximadamente 30 minutos</li>
+      <li>Possibilidade de atualizar os registros continuamente</li>
+      <li>Apoio para decisões financeiras mais conscientes</li>
+    </ul>
+    <p class="etc-text">E MUITO MAIS…</p>
+    <div class="receive-cta">
+      <a href="#pricing" class="btn-green">QUERO RECEBER MINHA PLANILHA →</a>
+    </div>
+    <p class="receive-delivery">Você recebe as instruções de acesso após a confirmação do pagamento, conforme o canal de entrega informado na compra.</p>
+  </div>
+</section>
+
+<!-- BONUS -->
+<section class="bonus-section">
+  <div class="container">
+    <p class="bonus-intro">E não para por aí… você também recebe <strong style="color:var(--white);">4 bônus especiais</strong>.</p>
+    <p class="bonus-warning">Se comprar depois, não ganha</p>
+    <h2 class="bonus-title">BÔNUS DISPONÍVEIS SOMENTE <span>NO PLANO COMPLETO</span></h2>
+
+    <div class="bonus-grid">
+      <div class="bonus-card">
+        <span class="bonus-pill">🎁 BÔNUS #1</span>
+        <div class="bonus-card-mockup">[ Imagem do bônus 1 ]</div>
+        <h4>Guia de Controle Financeiro</h4>
+        <ul>
+          <li>Organize as finanças da empresa com uma rotina simples de acompanhamento</li>
+          <li>Aprenda a registrar movimentações e observar os gastos sem complicar o dia a dia</li>
+          <li>Dicas práticas para manter o controle do dinheiro de forma contínua</li>
+        </ul>
+        <p class="bonus-value">Valor: R$ 29,90 — <span>HOJE: GRÁTIS</span></p>
+        <p style="font-size:11px;color:#9ca3af;margin-top:8px;font-weight:600;">BÔNUS INCLUSO APENAS NO PLANO COMPLETO</p>
+      </div>
+      <div class="bonus-card">
+        <span class="bonus-pill">🎁 BÔNUS #2</span>
+        <div class="bonus-card-mockup">[ Imagem do bônus 2 ]</div>
+        <h4>Planilha PF x PJ</h4>
+        <ul>
+          <li>Separe o dinheiro pessoal do dinheiro da empresa de forma prática</li>
+          <li>Evite que gastos particulares se misturem com as despesas do negócio</li>
+          <li>Mais clareza para entender os resultados reais da empresa</li>
+        </ul>
+        <p class="bonus-value">Valor: R$ 19,90 — <span>HOJE: GRÁTIS</span></p>
+        <p style="font-size:11px;color:#9ca3af;margin-top:8px;font-weight:600;">BÔNUS INCLUSO APENAS NO PLANO COMPLETO</p>
+      </div>
+      <div class="bonus-card">
+        <span class="bonus-pill">🎁 BÔNUS #3</span>
+        <div class="bonus-card-mockup">[ Imagem do bônus 3 ]</div>
+        <h4>Mapa do Ciclo Operacional</h4>
+        <ul>
+          <li>Entenda o caminho que o dinheiro percorre dentro da empresa</li>
+          <li>Identifique situações em que o dinheiro sai antes de entrar</li>
+          <li>Compreenda o que pode estar pressionando seu caixa</li>
+        </ul>
+        <p class="bonus-value">Valor: R$ 29,90 — <span>HOJE: GRÁTIS</span></p>
+        <p style="font-size:11px;color:#9ca3af;margin-top:8px;font-weight:600;">BÔNUS INCLUSO APENAS NO PLANO COMPLETO</p>
+      </div>
+      <div class="bonus-card">
+        <span class="bonus-pill">🎁 BÔNUS #4</span>
+        <div class="bonus-card-mockup">[ Imagem do bônus 4 ]</div>
+        <h4>Checklist Alavancas de Crescimento</h4>
+        <ul>
+          <li>Identifique oportunidades de reduzir desperdícios e melhorar a eficiência financeira</li>
+          <li>Encontre pontos de melhoria nos resultados da empresa</li>
+          <li>Descubra onde concentrar sua atenção para decisões mais bem fundamentadas</li>
+        </ul>
+        <p class="bonus-value">Valor: R$ 19,90 — <span>HOJE: GRÁTIS</span></p>
+        <p style="font-size:11px;color:#9ca3af;margin-top:8px;font-weight:600;">BÔNUS INCLUSO APENAS NO PLANO COMPLETO</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- PRICING -->
+<section class="pricing-section" id="pricing">
+  <h2>⏰ OFERTA VÁLIDA POR TEMPO LIMITADO</h2>
+  <p class="pricing-sub">Aproveite Enquanto o Plano Completo está em Promoção! — Receba seu acesso digital após a confirmação do pagamento.</p>
+
+  <div class="pricing-grid">
+    <!-- Plano Básico -->
+    <div class="pricing-card">
+      <h3>🔥 Plano Básico</h3>
+      <p class="plan-desc">Planilha de Controle Financeiro Empresarial (Sem Bônus)</p>
+      <hr class="pricing-divider">
+      <ul class="pricing-items">
+        <li>Planilha de Controle Financeiro Empresarial</li>
+        <li>Acesso digital imediato</li>
+        <li>Cálculos automáticos prontos para usar</li>
+      </ul>
+      <div class="price-block">
+        <p class="price-from">de R$ 39,90</p>
+        <p class="price-main">R$ <strong>17,90</strong></p>
+        <p class="price-installment">ou 4x de R$ 4,47 no cartão</p>
+      </div>
+      <a href="#" class="btn-green">QUERO APROVEITAR</a>
+      <p class="pricing-warning">⚠️ Atenção: Temos uma oferta ainda melhor com os 4 bônus! Veja ao lado.</p>
+    </div>
+
+    <!-- Plano Completo -->
+    <div class="pricing-card featured">
+      <div class="most-sold-badge">⭐ Mais Vendido</div>
+      <h3>Plano Completo</h3>
+      <p class="plan-desc">✓ Todos os bônus inclusos</p>
+      <hr class="pricing-divider">
+      <ul class="pricing-items">
+        <li>Planilha de Controle Financeiro Empresarial</li>
+        <li>🎁 Bônus #1: Guia de Controle Financeiro</li>
+        <li>🎁 Bônus #2: Planilha PF x PJ</li>
+        <li>🎁 Bônus #3: Mapa do Ciclo Operacional</li>
+        <li>🎁 Bônus #4: Checklist Alavancas de Crescimento</li>
+        <li>Entrega digital após confirmação do pagamento</li>
+        <li>Garantia de 15 dias</li>
+      </ul>
+      <div class="price-block">
+        <p class="price-from">de R$ 59,90</p>
+        <p class="price-main">R$ <strong>27,90</strong></p>
+        <p class="price-installment">ou 4x de R$ 6,97 no cartão</p>
+      </div>
+      <a href="#" class="btn-green">QUERO O PLANO COMPLETO COM BÔNUS!</a>
+      <p style="text-align:center;font-size:12px;color:var(--text-muted);margin-top:10px;">🔥 Aproveite agora: Acesso vitalício e envio imediato!</p>
+    </div>
+  </div>
+
+  <div class="pricing-guarantee">
+    <span class="shield">🛡️</span>
+    Compra 100% segura e garantida!
+  </div>
+</section>
+
+<!-- GUARANTEE -->
+<section class="guarantee-section">
+  <div class="guarantee-box">
+    <div class="guarantee-icon">🛡️</div>
+    <h2>Garantia de 15 Dias</h2>
+    <p>Seu investimento é protegido pela garantia da oferta. Você terá 15 dias para acessar e avaliar a planilha. Caso o material não atenda às condições apresentadas na oferta, poderá solicitar o reembolso dentro do prazo, conforme a política de garantia aplicável.</p>
+  </div>
+</section>
+
+<!-- HOW IT WORKS -->
+<section class="howto-section">
+  <h2>COMO FUNCIONA O ACESSO</h2>
+  <p class="howto-sub">Passo a passo após a compra</p>
+  <div class="steps-grid">
+    <div class="step-card">
+      <div class="step-num">1</div>
+      <h4>Finalize a compra</h4>
+      <p>Você finaliza a compra de forma segura pelo método de pagamento de sua preferência.</p>
+    </div>
+    <div class="step-card">
+      <div class="step-num">2</div>
+      <h4>Receba o acesso</h4>
+      <p>Receba as instruções para acessar sua planilha pelo canal de entrega informado na compra. O material é liberado após a confirmação do pagamento.</p>
+    </div>
+    <div class="step-card">
+      <div class="step-num">3</div>
+      <h4>Comece a usar</h4>
+      <p>Acesse sua planilha e comece a organizar as finanças da empresa. Registre entradas, custos e despesas, e visualize quanto realmente sobrou.</p>
+    </div>
+  </div>
+  <p style="font-size:13px;color:var(--text-muted);margin-bottom:12px;">Disponível em:</p>
+  <div style="display:flex;justify-content:center;gap:16px;flex-wrap:wrap;margin-bottom:32px;">
+    <span style="background:var(--white);border-radius:12px;padding:10px 20px;box-shadow:0 2px 8px rgba(0,0,0,0.08);font-size:13px;font-weight:600;color:var(--dark);">📱 Celular</span>
+    <span style="background:var(--white);border-radius:12px;padding:10px 20px;box-shadow:0 2px 8px rgba(0,0,0,0.08);font-size:13px;font-weight:600;color:var(--dark);">💻 Computador</span>
+    <span style="background:var(--white);border-radius:12px;padding:10px 20px;box-shadow:0 2px 8px rgba(0,0,0,0.08);font-size:13px;font-weight:600;color:var(--dark);">🗒️ Tablet</span>
+  </div>
+  <a href="#pricing" class="btn-green" style="max-width:420px;">QUERO ACESSAR AGORA</a>
+</section>
+
+<!-- FAQ -->
+<section class="faq-section">
+  <h2>Perguntas Frequentes</h2>
+  <p class="faq-sub">Tire suas dúvidas antes de garantir seu material.</p>
+  <div class="faq-list">
+    <div class="faq-item">
+      <div class="faq-question"><span>Como recebo a Planilha de Controle Financeiro Empresarial?</span><div class="faq-toggle">+</div></div>
+      <div class="faq-answer">Após a confirmação do pagamento, você recebe as instruções de acesso pelo canal de entrega informado na compra — geralmente por e-mail ou WhatsApp.</div>
+    </div>
+    <div class="faq-item">
+      <div class="faq-question"><span>Consigo descobrir para onde vai o dinheiro da minha empresa em 30 minutos?</span><div class="faq-toggle">+</div></div>
+      <div class="faq-answer">Sim. Com seus dados financeiros disponíveis, você preenche a planilha e já visualiza o resultado do período em aproximadamente 30 minutos. O tempo pode variar dependendo da quantidade de movimentações.</div>
+    </div>
+    <div class="faq-item">
+      <div class="faq-question"><span>A planilha mostra quanto dinheiro entrou e quanto saiu?</span><div class="faq-toggle">+</div></div>
+      <div class="faq-answer">Sim. A planilha possui campos separados para registrar entradas, custos e despesas, e apresenta os totais de forma organizada para você visualizar o que aconteceu com o dinheiro no período.</div>
+    </div>
+    <div class="faq-item">
+      <div class="faq-question"><span>Consigo identificar quais gastos estão consumindo meu dinheiro?</span><div class="faq-toggle">+</div></div>
+      <div class="faq-answer">Sim. Ao registrar seus custos e despesas, você consegue visualizar quais gastos estão mais presentes e quais merecem mais atenção no controle financeiro do negócio.</div>
+    </div>
+    <div class="faq-item">
+      <div class="faq-question"><span>Preciso entender de contabilidade para utilizar a planilha?</span><div class="faq-toggle">+</div></div>
+      <div class="faq-answer">Não. A planilha foi desenvolvida para ser simples e direta. Você preenche os campos com as informações do seu negócio e ela faz o restante.</div>
+    </div>
+    <div class="faq-item">
+      <div class="faq-question"><span>Preciso saber criar fórmulas ou dominar planilhas?</span><div class="faq-toggle">+</div></div>
+      <div class="faq-answer">Não. A planilha já vem pronta com todos os cálculos configurados. Você só precisa preencher os campos com seus dados.</div>
+    </div>
+    <div class="faq-item">
+      <div class="faq-question"><span>A planilha faz os cálculos automaticamente?</span><div class="faq-toggle">+</div></div>
+      <div class="faq-answer">Sim. Após preencher as informações, os totais e resultados são calculados automaticamente pela planilha, sem necessidade de intervenção manual.</div>
+    </div>
+    <div class="faq-item">
+      <div class="faq-question"><span>A planilha serve para pequenos empresários e prestadores de serviços?</span><div class="faq-toggle">+</div></div>
+      <div class="faq-answer">Sim. O material foi desenvolvido especialmente para donos de pequenos negócios, empreendedores e prestadores de serviços que precisam de um controle financeiro prático e acessível.</div>
+    </div>
+    <div class="faq-item">
+      <div class="faq-question"><span>Posso utilizar mesmo que minha empresa ainda não tenha um controle financeiro organizado?</span><div class="faq-toggle">+</div></div>
+      <div class="faq-answer">Sim. A planilha foi criada justamente para quem está começando a organizar as finanças. Você começa do zero e vai construindo o controle conforme registra suas movimentações.</div>
+    </div>
+    <div class="faq-item">
+      <div class="faq-question"><span>A planilha substitui o trabalho de um contador ou consultor financeiro?</span><div class="faq-toggle">+</div></div>
+      <div class="faq-answer">Não. A planilha é uma ferramenta de apoio à organização e acompanhamento financeiro. Ela não substitui serviços de contabilidade, consultoria especializada ou obrigações legais e fiscais da empresa.</div>
+    </div>
+    <div class="faq-item">
+      <div class="faq-question"><span>Quanto tempo leva para receber o material?</span><div class="faq-toggle">+</div></div>
+      <div class="faq-answer">O acesso é liberado imediatamente após a confirmação do pagamento, conforme as condições da plataforma de venda.</div>
+    </div>
+    <div class="faq-item">
+      <div class="faq-question"><span>Posso continuar atualizando a planilha ao longo dos meses?</span><div class="faq-toggle">+</div></div>
+      <div class="faq-answer">Sim. Você pode utilizar a planilha continuamente, registrando as movimentações de cada período e acompanhando a evolução financeira do negócio.</div>
+    </div>
+    <div class="faq-item">
+      <div class="faq-question"><span>O material possui garantia?</span><div class="faq-toggle">+</div></div>
+      <div class="faq-answer">Sim. Você tem 15 dias para acessar e avaliar o material. Caso não atenda às condições apresentadas na oferta, poderá solicitar o reembolso dentro do prazo.</div>
+    </div>
+  </div>
+</section>
+
+<!-- FINAL CTA -->
+<section class="final-cta">
+  <a href="#pricing" class="btn-green">SIM, QUERO ORGANIZAR AS FINANÇAS DA MINHA EMPRESA AGORA! →</a>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <p class="copyright">Copyright © 2026 · Todos os direitos reservados.</p>
+  <p>Este é um material digital independente, desenvolvido para auxiliar pequenos empresários na organização e no acompanhamento das movimentações financeiras de seus negócios.</p>
+  <p>A planilha possui finalidade de controle e apoio à análise financeira. Os resultados apresentados dependem da precisão, da atualização e da completude das informações inseridas pelo usuário.</p>
+  <p>A utilização do material não garante aumento de lucro, redução de despesas ou resultados financeiros específicos. A planilha não substitui serviços de contabilidade, consultoria financeira especializada ou obrigações legais e fiscais da empresa.</p>
+  <p>Este site não possui qualquer vínculo com Facebook™, Instagram™, Google™ ou qualquer outra plataforma mencionada.</p>
+  <p>A reprodução não autorizada, total ou parcial, por qualquer meio, constitui violação de direitos autorais e pode resultar em sanções civis e criminais, de acordo com a legislação aplicável.</p>
+</footer>
+
+<script>
+  document.querySelectorAll('.faq-question').forEach(function(q) {
+    q.addEventListener('click', function() {
+      var item = this.parentElement;
+      var isOpen = item.classList.contains('open');
+      document.querySelectorAll('.faq-item').forEach(function(i) { i.classList.remove('open'); });
+      if (!isOpen) item.classList.add('open');
+    });
+  });
+
+  (function() {
+    var track = document.getElementById('carouselTrack');
+    var dotsEl = document.getElementById('carouselDots');
+    if (!track || !dotsEl) return;
+    var cards = track.querySelectorAll('.carousel-card');
+    var total = cards.length;
+    var current = 0;
+    var dots = [];
+    var timer;
+
+    function itemsPerView() { return window.innerWidth <= 600 ? 1 : 3; }
+    function maxIndex() { return total - itemsPerView(); }
+
+    function buildDots() {
+      dotsEl.innerHTML = '';
+      dots = [];
+      for (var i = 0; i <= maxIndex(); i++) {
+        (function(idx) {
+          var d = document.createElement('button');
+          d.className = 'carousel-dot' + (idx === current ? ' active' : '');
+          d.setAttribute('aria-label', 'Slide ' + (idx + 1));
+          d.onclick = function() { goTo(idx); };
+          dotsEl.appendChild(d);
+          dots.push(d);
+        })(i);
+      }
+    }
+
+    function goTo(idx) {
+      current = Math.max(0, Math.min(idx, maxIndex()));
+      var cardWidth = cards[0].offsetWidth + 16;
+      track.style.transform = 'translateX(-' + (current * cardWidth) + 'px)';
+      dots.forEach(function(d, i) { d.classList.toggle('active', i === current); });
+    }
+
+    function next() { goTo(current >= maxIndex() ? 0 : current + 1); }
+    function startTimer() { timer = setInterval(next, 3500); }
+    function stopTimer() { clearInterval(timer); }
+
+    buildDots();
+    goTo(0);
+    startTimer();
+
+    track.addEventListener('mouseenter', stopTimer);
+    track.addEventListener('mouseleave', startTimer);
+    window.addEventListener('resize', function() { buildDots(); goTo(0); });
+  })();
+</script>
+</body>
+</html>
